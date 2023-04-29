@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Search book</title>
+</head>
+<body>
+<div>
+    <form th:method="POST" th:action="@{/books/search}">
+        <label for="name">Enter the book name: </label>
+        <input type="text" name="name" id="name"/>
+        <input type="submit" value="Search book"/>
+    </form>
+</div>
+<hr/>
+<div th:if="${books}">
+    <div th:if="${books.isEmpty()}">
+        <p>Books not found</p>
+    </div>
+    <div th:each="book : ${books}">
+        <span th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book</span>
+        <div th:if="${book.getPerson() == null}">
+            <p>The book is not assign</p>
+            <hr/>
+        </div>
+        <div th:unless="${book.getPerson() == null}">
+            <span>The book is assigned to: </span><span th:text="${book.getPerson().getName()}">Person name</span>
+            <hr/>
+        </div>
+    </div>
+</div>
+<br/>
+<div>
+    <form th:action="@{/books/}">
+        <input type="submit" value="Go to the library"/>
+    </form>
+</div>
+</body>
+</html>
